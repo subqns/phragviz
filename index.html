@@ -1,0 +1,71 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name='viewport' content='width=device-width'>
+  <title>Phragmén Explorable</title>
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <h2>A Sequential Phragmén "Explorable Explanation"</h2>
+  <p>This is an <a href="https://explorabl.es/">explorable explanation</a> of the Sequential <a href="https://en.wikipedia.org/wiki/Lars_Edvard_Phragm%C3%A9n">Phragménvoting system</a> (invented in the 1890s) currently used on <a href="http://kusama.network">Kusama</a> and <a href="http://polkadot.network">Polkadot's</a> on-chain elections. You can create candidates and voters, adjust their voting stake (drag left and right or type) and add and delete votes to see how it affects the results.</p>
+
+  The examples on the <a href="https://wiki.polkadot.network/docs/en/learn-phragmen">polkadot wiki</a> can be checked for debugging: <button id="example_1">example 1</button> and <button id="example_2">example 2</button>.
+
+  <div id="container" class="container">
+    <div class="candidates">
+      <h3>candidates</h3>
+      <table>
+	<thead>
+	  <tr>
+	    <th>name</th>
+	    <th>tokens</th>
+	    <th>vote</th>
+	    <th>elected</th>
+	    <th>score per round</th>
+	    <th>delete</th>
+	  </tr>
+	</thead>
+	<tbody id="candidates">
+	</tbody>
+      </table>      
+      <button id="new_candidate">add candidate</button>
+
+      <p>number to elect: <input id="num_rounds" type="number" value=2></input></p>
+    </div>
+
+    <div class="voters">
+      <h3>voters</h3>
+      <table>
+	<thead>
+	  <tr>
+	    <th>name</th>
+	    <th>stake</th>
+	    <th>load per round</th>
+	    <th>votes</th>
+	    <th>delete</th>
+	  </tr>
+	</thead>
+	<tbody id="voters">
+	</tbody>
+      </table>
+      <button id="new_voter">add voter</button>
+    </div>    
+  </div>
+  <script src="bundle.js"></script>
+
+  <p>
+    Todo:
+    <ul>
+      <li>Explain loads and scores per round</li>
+      <li>Add conviction to votes</li>
+      <li>Figure out ordered votes for council elections</li>
+      <li>Simplified/complicated views</li>
+      <li>Import on-chain election results</li>
+    </ul>
+    <a href="https://github.com/playing-with-dust/phragviz">GPL3 source code here</a>
+  <p>
+</body>
+</html>
