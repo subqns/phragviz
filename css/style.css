@@ -3,14 +3,14 @@ body {
     width: 100%;
     background: #eee;
     font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
-    font-size: 1.5em;
+    font-size: 1em;
     padding: 1em;
     margin: 0;
 }
 
 input {
-    font-size: 1em;
-    width: 3em;
+    font-size: 0.75em;
+    width: 4em;
 }
 
 th, select { font-size: 0.75em; }
@@ -48,11 +48,6 @@ th, select { font-size: 0.75em; }
     }
 }
 
-
-.voters input {
-    width: 2em;
-}
-
 table { border-spacing: 0; }
 th { border-bottom: 1px solid #eee; }
 td { text-align: center; }
@@ -61,6 +56,10 @@ td { text-align: center; }
     text-align: left;
     display: flex;
     flex-direction: row;
+}
+
+.votes-container {
+    width: max-content;
 }
 
 .small-td {

@@ -10934,7 +10934,7 @@ const make_new_vote_select = (name) => {
 const refill_vote_select = (name,state) => {
     let v = $("#"+name+"_new_vote")
     v.empty()
-    v.append($('<option>').html("add vote"))
+    v.append($('<option>').html("add"))
     for (let candidate of state.candidates) {
 	v.append($('<option>')
 		 .attr('value',candidate.name)
@@ -11010,14 +11010,16 @@ const new_voter_with_name = (name,budget) => {
 		.append($('<td>').attr('id',name+'_budget')
 			.append($('<input>')
 				.attr('id',name+'_budget_drag')
-				.attr('type','text')
+				.attr('type','number')
 				.attr('value',v.budget.toFixed(2))))
 		.append($('<td>').attr('id',name+'_load')
 			.attr('class','small-td')
 			.html(v.load))
 		.append($('<td>')
 			.attr('class','votes-td')
-			.append($('<div>').attr('id',name+'_votes'))
+			.append($('<div>')
+				.attr('id',name+'_votes')
+				.attr('class','votes-container'))
 			.append($('<div>').append(make_new_vote_select(name))))
 		.append($('<td>').html(make_delete_button(name)))
 	       )
@@ -11040,7 +11042,7 @@ const new_voter_with_name = (name,budget) => {
     let vote_select = $("#"+name+"_new_vote")
     vote_select.change(() => {
 	new_vote(name,vote_select.val(),state)
-	vote_select.val("add vote")
+	vote_select.val("add")
     });
 
     update(state)
@@ -11240,7 +11242,6 @@ class Vote {
   }
 
   reset() {
-    console.log("reset vote");
     this.load = 0;
     this.weight = 0;
   }
@@ -11282,7 +11283,6 @@ class Voter {
     this.votes = this.votes.filter(v => {
       return vote.can_name != v.can_name || vote.voter_name != v.voter_name;
     });
-    console.log(this.votes);
   }
 
   find_vote(can_name) {

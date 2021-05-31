@@ -6,7 +6,6 @@ class Vote {
     }
 
     reset() {
-	console.log("reset vote")
 	this.load=0
 	this.weight=0
     }
@@ -44,7 +43,6 @@ class Voter {
 	    return vote.can_name!=v.can_name ||
 		vote.voter_name!=v.voter_name
 	})
-	console.log(this.votes)
     }
     
     find_vote(can_name) {
