@@ -11,7 +11,6 @@ function mouseCtrl(n, getCtrl, setCtrl) {
     var startval; // starting input control value
     // find the input element to allow mouse control on
     ctrl = document.getElementById(n);
-    console.log([ctrl,n])
     // on mousedown start tracking mouse relative position
     ctrl.onmousedown = function(e) {
 	startpos = e.clientX;

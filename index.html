@@ -28,12 +28,12 @@
 	    <th>delete</th>
 	  </tr>
 	</thead>
-	<tbody id="candidates">
+	<tbody id="one_candidates">
 	</tbody>
       </table>      
-      <button id="new_candidate">add candidate</button>
+      <button id="one_new_candidate">add candidate</button>
 
-      <p>number to elect: <input id="num_rounds" type="number" value=2></input></p>
+      <p>number to elect: <input id="one_num_rounds" type="number" value=2></input></p>
     </div>
 
     <div class="voters">
@@ -48,12 +48,60 @@
 	    <th>delete</th>
 	  </tr>
 	</thead>
-	<tbody id="voters">
+	<tbody id="one_voters">
 	</tbody>
       </table>
-      <button id="new_voter">add voter</button>
+      <button id="one_new_voter">add voter</button>
     </div>    
   </div>
+
+  <hr>
+
+    <div id="container" class="container">
+    <div class="candidates">
+      <h3>candidates</h3>
+      <table>
+	<thead>
+	  <tr>
+	    <th>name</th>
+	    <th>tokens</th>
+	    <th>vote</th>
+	    <th>elected</th>
+	    <th>score per round</th>
+	    <th>delete</th>
+	  </tr>
+	</thead>
+	<tbody id="two_candidates">
+	</tbody>
+      </table>      
+      <button id="two_new_candidate">add candidate</button>
+
+      <p>number to elect: <input id="two_num_rounds" type="number" value=2></input></p>
+    </div>
+
+    <div class="voters">
+      <h3>voters</h3>
+      <table>
+	<thead>
+	  <tr>
+	    <th>name</th>
+	    <th>stake</th>
+	    <th>load per round</th>
+	    <th>votes</th>
+	    <th>delete</th>
+	  </tr>
+	</thead>
+	<tbody id="two_voters">
+	</tbody>
+      </table>
+      <button id="two_new_voter">add voter</button>
+    </div>    
+  </div>
+
+
+
+
+
   <script src="bundle.js"></script>
 
   <p>
