@@ -24,7 +24,6 @@
 	    <th>tokens</th>
 	    <th>vote</th>
 	    <th>elected</th>
-	    <th>score per round</th>
 	    <th>delete</th>
 	  </tr>
 	</thead>
@@ -43,7 +42,6 @@
 	  <tr>
 	    <th>name</th>
 	    <th>stake</th>
-	    <th>load per round</th>
 	    <th>votes</th>
 	    <th>delete</th>
 	  </tr>
@@ -98,6 +96,49 @@
     </div>    
   </div>
 
+    <hr>
+
+        <div id="container" class="container">
+    <div class="candidates">
+      <h3>candidates</h3>
+      <table>
+	<thead>
+	  <tr>
+	    <th>name</th>
+	    <th>tokens</th>
+	    <th>vote</th>
+	    <th>elected</th>
+	    <th>score per round</th>
+	    <th>delete</th>
+	  </tr>
+	</thead>
+	<tbody id="three_candidates">
+	</tbody>
+      </table>      
+      <button id="three_new_candidate">add candidate</button>
+
+      <p>number to elect: <input id="three_num_rounds" type="number" value=2></input></p>
+    </div>
+
+    <div class="voters">
+      <h3>voters</h3>
+      <table>
+	<thead>
+	  <tr>
+	    <th>name</th>
+	    <th>stake</th>
+	    <th>conviction</th>
+	    <th>load per round</th>
+	    <th>votes</th>
+	    <th>delete</th>
+	  </tr>
+	</thead>
+	<tbody id="three_voters">
+	</tbody>
+      </table>
+      <button id="three_new_voter">add voter</button>
+    </div>    
+  </div>
 
 
 

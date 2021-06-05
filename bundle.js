@@ -10896,7 +10896,8 @@ const mousedrag = require("./mousedrag.js");
 const phragmen = require("./phragmen.js");
 
 class Election {
-  constructor(election_id) {
+  constructor(election_id, style) {
+    this.style = style;
     this.id = election_id + "_";
     this.state = new phragmen.Assignment([], []);
     this.voter_count = 0;
@@ -10911,12 +10912,12 @@ class Election {
 
   make_voter_name() {
     this.voter_count += 1;
-    return "voter_" + this.voter_count;
+    return "voter " + this.voter_count;
   }
 
   make_candidate_name() {
     this.candidate_count += 1;
-    return "c_" + this.candidate_count;
+    return "c " + this.candidate_count;
   }
 
   make_circle(r, text) {
@@ -10950,9 +10951,15 @@ class Election {
   }
 
   new_candidate_with_name(name) {
-    let c = new phragmen.Candidate(name);
-    this.state.add_candidate(c);
-    $("#" + this.id + "candidates").append($('<tr>').attr('id', this.id + name).append($('<td>').html(name)).append($('<td>').attr('id', this.id + name + '_stakeshare')).append($('<td>').attr('id', this.id + name + '_voteshare')).append($('<td>').attr('id', this.id + name + '_elected_round')).append($('<td>').attr('id', this.id + name + '_score').attr('class', 'small-td')).append($('<td>').html(this.make_delete_button(name))));
+    this.state.add_candidate(new phragmen.Candidate(name));
+    let el = $('<tr>').attr('id', this.id + name).append($('<td>').html(name)).append($('<td>').attr('id', this.id + name + '_stakeshare')).append($('<td>').attr('id', this.id + name + '_voteshare')).append($('<td>').attr('id', this.id + name + '_elected_round'));
+
+    if (this.style > 0) {
+      el.append($('<td>').attr('id', this.id + name + '_score').attr('class', 'small-td'));
+    }
+
+    el.append($('<td>').html(this.make_delete_button(name)));
+    $("#" + this.id + "candidates").append(el);
     $('#' + this.id + name + '_delete').click(() => {
       this.state.delete_candidate(name);
       $('#' + this.id + name).remove();
@@ -10993,12 +11000,26 @@ class Election {
   new_voter_with_name(name, budget) {
     let v = new phragmen.Voter(name, budget, []);
     this.state.add_voter(v);
-    $("#" + this.id + "voters").append($('<tr>').attr('id', this.id + name).append($('<td>').html(name)).append($('<td>').attr('id', this.id + name + '_budget').append($('<input>').attr('id', this.id + name + '_budget_drag').attr('type', 'number').attr('value', v.budget.toFixed(2)))).append($('<td>').attr('id', this.id + name + '_load').attr('class', 'small-td').html(v.load)).append($('<td>').attr('class', 'votes-td').append($('<div>').attr('id', this.id + name + '_votes').attr('class', 'votes-container')).append($('<div>').append(this.make_new_vote_select(name)))).append($('<td>').html(this.make_delete_button(name))));
-    mousedrag.init(this.id + name + '_budget_drag');
-    $('#' + this.id + name + '_budget_drag').change(() => {
+    let el = $('<tr>').attr('id', this.id + name).append($('<td>').html(name)).append($('<td>').attr('id', this.id + name + '_budget').append($('<input>').attr('id', this.id + name + '_budget_drag').attr('type', 'number').attr('value', v.budget.toFixed(2)).change(() => {
       v.budget = parseFloat($('#' + this.id + name + '_budget_drag').val());
       this.update();
-    });
+    })));
+
+    if (this.style > 1) {
+      el.append($('<td>').append($('<select>').attr('id', this.id + name + "_conviction").attr('name', name + "_conviction").append($('<option>').html("x0.1 (no lock)").attr('value', 0.1)).append($('<option>').html("x1 (8 days)").attr('value', 1)).append($('<option>').html("x2 (16 days)").attr('value', 2)).append($('<option>').html("x3 (32 days)").attr('value', 3)).append($('<option>').html("x4 (64 days)").attr('value', 4)).append($('<option>').html("x5 (128 days)").attr('value', 5)).append($('<option>').html("x6 (256 days)").attr('value', 6)).val(1).change(() => {
+        v.set_conviction(parseFloat($("#" + this.id + name + "_conviction").val()));
+        this.update();
+      })));
+    }
+
+    if (this.style > 0) {
+      el.append($('<td>').attr('id', this.id + name + '_load').attr('class', 'small-td').html(v.load));
+    }
+
+    el.append($('<td>').attr('class', 'votes-td').append($('<div>').attr('id', this.id + name + '_votes').attr('class', 'votes-container')).append($('<div>').append(this.make_new_vote_select(name))));
+    el.append($('<td>').html(this.make_delete_button(name)));
+    $("#" + this.id + "voters").append(el);
+    mousedrag.init(this.id + name + '_budget_drag');
     this.refill_vote_select(name);
     $('#' + this.id + name + "_delete").click(() => {
       this.state.delete_voter(name);
@@ -11088,7 +11109,7 @@ exports.Election = Election;
 const $ = require("jquery")
 const election = require("./election.js")
 
-const one = new election.Election("one")
+const one = new election.Election("one",0)
 
 $("#one_new_candidate").click(()=>{one.new_candidate()});
 $("#one_new_voter").click(()=>{one.new_voter()});
@@ -11129,21 +11150,37 @@ one.build([3,
 	       ["voter_5", 1.0, ["c_2","c_3","c_4"]]
 	   ]])
 
-const election2 = new election.Election("two")
+const two = new election.Election("two",1)
 
-$("#two_new_candidate").click(()=>{election2.new_candidate()});
-$("#two_new_voter").click(()=>{election2.new_voter()});
-$("#two_num_rounds").change(()=>{election2.update()});
+$("#two_new_candidate").click(()=>{two.new_candidate()});
+$("#two_new_voter").click(()=>{two.new_voter()});
+$("#two_num_rounds").change(()=>{two.update()});
 
-election2.build([3,
-		 ["c_1","c_2","c_3","c_4","c_5"],
-		 [
-		     ["voter_1", 1.0, ["c_1","c_2"]],
-		     ["voter_2", 2.0, ["c_1","c_2"]],
-		     ["voter_3", 3.0, ["c_1"]],
-		     ["voter_4", 4.0, ["c_2","c_3","c_4"]],
-		     ["voter_5", 5.0, ["c_1","c_4"]]
-		 ]])
+two.build([3,
+	   ["c_1","c_2","c_3","c_4","c_5"],
+	   [
+	       ["voter_1", 1.0, ["c_1","c_2"]],
+	       ["voter_2", 2.0, ["c_1","c_2"]],
+	       ["voter_3", 3.0, ["c_1"]],
+	       ["voter_4", 4.0, ["c_2","c_3","c_4"]],
+	       ["voter_5", 5.0, ["c_1","c_4"]]
+	   ]])
+
+const three = new election.Election("three",2)
+
+$("#three_new_candidate").click(()=>{three.new_candidate()});
+$("#three_new_voter").click(()=>{three.new_voter()});
+$("#three_num_rounds").change(()=>{three.update()});
+
+three.build([3,
+	     ["c_1","c_2","c_3","c_4","c_5"],
+	     [
+		 ["voter_1", 1.0, ["c_1","c_2"]],
+		 ["voter_2", 2.0, ["c_1","c_2"]],
+		 ["voter_3", 3.0, ["c_1"]],
+		 ["voter_4", 4.0, ["c_2","c_3","c_4"]],
+		 ["voter_5", 5.0, ["c_1","c_4"]]
+	     ]])
 
 },{"./election.js":2,"jquery":1}],4:[function(require,module,exports){
 "use strict";
@@ -11248,6 +11285,7 @@ class Voter {
     this.budget = budget;
     this.votes = [];
     this.load = 0;
+    this.conviction = 1;
     this.load_record = [];
 
     for (let can_name of votes) {
@@ -11265,6 +11303,11 @@ class Voter {
 
   add_vote(vote) {
     this.votes.push(vote);
+  }
+
+  set_conviction(c) {
+    this.conviction = c;
+    console.log(this.conviction);
   }
 
   delete_vote(vote) {
@@ -11355,8 +11398,9 @@ class Assignment {
         let candidate = this.find_candidate(vote.can_name);
 
         if (candidate != false) {
-          candidate.approval += voter.budget;
-          this.total_budget += voter.budget;
+          console.log(voter.conviction);
+          candidate.approval += voter.budget * voter.conviction;
+          this.total_budget += voter.budget * voter.conviction;
           candidate.num_votes += 1;
           this.total_votes += 1;
         } else {
@@ -11450,7 +11494,7 @@ class Assignment {
     for (let voter of this.voters) {
       for (let vote of voter.votes) {
         if (voter.load > 0.0) {
-          let weight = voter.budget * vote.load / voter.load;
+          let weight = voter.budget * voter.conviction * vote.load / voter.load;
           this.set_weight(vote, weight);
         }
       }
@@ -11500,7 +11544,7 @@ const seq_phragmen = (assignment, num_to_elect) => {
 
         if (!candidate.elected) {
           // voter load is zero first time around
-          candidate.score += voter.budget * voter.load / candidate.approval;
+          candidate.score += voter.budget * voter.conviction * voter.load / candidate.approval;
         }
       }
     }

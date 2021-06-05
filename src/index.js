@@ -1,7 +1,7 @@
 const $ = require("jquery")
 const election = require("./election.js")
 
-const one = new election.Election("one")
+const one = new election.Election("one",0)
 
 $("#one_new_candidate").click(()=>{one.new_candidate()});
 $("#one_new_voter").click(()=>{one.new_voter()});
@@ -42,18 +42,34 @@ one.build([3,
 	       ["voter_5", 1.0, ["c_2","c_3","c_4"]]
 	   ]])
 
-const election2 = new election.Election("two")
+const two = new election.Election("two",1)
 
-$("#two_new_candidate").click(()=>{election2.new_candidate()});
-$("#two_new_voter").click(()=>{election2.new_voter()});
-$("#two_num_rounds").change(()=>{election2.update()});
+$("#two_new_candidate").click(()=>{two.new_candidate()});
+$("#two_new_voter").click(()=>{two.new_voter()});
+$("#two_num_rounds").change(()=>{two.update()});
 
-election2.build([3,
-		 ["c_1","c_2","c_3","c_4","c_5"],
-		 [
-		     ["voter_1", 1.0, ["c_1","c_2"]],
-		     ["voter_2", 2.0, ["c_1","c_2"]],
-		     ["voter_3", 3.0, ["c_1"]],
-		     ["voter_4", 4.0, ["c_2","c_3","c_4"]],
-		     ["voter_5", 5.0, ["c_1","c_4"]]
-		 ]])
+two.build([3,
+	   ["c_1","c_2","c_3","c_4","c_5"],
+	   [
+	       ["voter_1", 1.0, ["c_1","c_2"]],
+	       ["voter_2", 2.0, ["c_1","c_2"]],
+	       ["voter_3", 3.0, ["c_1"]],
+	       ["voter_4", 4.0, ["c_2","c_3","c_4"]],
+	       ["voter_5", 5.0, ["c_1","c_4"]]
+	   ]])
+
+const three = new election.Election("three",2)
+
+$("#three_new_candidate").click(()=>{three.new_candidate()});
+$("#three_new_voter").click(()=>{three.new_voter()});
+$("#three_num_rounds").change(()=>{three.update()});
+
+three.build([3,
+	     ["c_1","c_2","c_3","c_4","c_5"],
+	     [
+		 ["voter_1", 1.0, ["c_1","c_2"]],
+		 ["voter_2", 2.0, ["c_1","c_2"]],
+		 ["voter_3", 3.0, ["c_1"]],
+		 ["voter_4", 4.0, ["c_2","c_3","c_4"]],
+		 ["voter_5", 5.0, ["c_1","c_4"]]
+	     ]])

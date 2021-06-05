@@ -21,6 +21,7 @@ class Voter {
         this.budget=budget
         this.votes=[]
 	this.load=0
+	this.conviction=1
 	this.load_record=[]
 	for (let can_name of votes) {
 	    this.votes.push(new Vote(name,can_name))
@@ -38,6 +39,11 @@ class Voter {
 	this.votes.push(vote)
     }
 
+    set_conviction(c) {
+	this.conviction=c
+	console.log(this.conviction)
+    }
+    
     delete_vote(vote) {
 	this.votes = this.votes.filter((v) => {
 	    return vote.can_name!=v.can_name ||
@@ -112,8 +118,9 @@ class Assignment {
 	    for (let vote of voter.votes) {
 		let candidate = this.find_candidate(vote.can_name)
 		if (candidate!=false) {
-		    candidate.approval+=voter.budget
-		    this.total_budget+=voter.budget
+		    console.log(voter.conviction)
+		    candidate.approval+=voter.budget*voter.conviction
+		    this.total_budget+=voter.budget*voter.conviction
 		    candidate.num_votes+=1
 		    this.total_votes+=1
 		} else {
@@ -204,7 +211,7 @@ class Assignment {
         for (let voter of this.voters) {
             for (let vote of voter.votes) {
 		if (voter.load > 0.0) {
-		    let weight=voter.budget*vote.load/voter.load
+		    let weight=(voter.budget*voter.conviction)*vote.load/voter.load
                     this.set_weight(vote,weight)
 		}
 	    }
@@ -244,7 +251,7 @@ const seq_phragmen = (assignment,num_to_elect) => {
 		// assume it exists...
 		if (!candidate.elected) {
 		    // voter load is zero first time around
-		    candidate.score+=voter.budget*voter.load/candidate.approval	    
+		    candidate.score+=(voter.budget*voter.conviction)*voter.load/candidate.approval	    
 		}
 	    }
 	}
