@@ -10912,12 +10912,12 @@ class Election {
 
   make_voter_name() {
     this.voter_count += 1;
-    return "voter " + this.voter_count;
+    return "voter_" + this.voter_count;
   }
 
   make_candidate_name() {
     this.candidate_count += 1;
-    return "c " + this.candidate_count;
+    return "c_" + this.candidate_count;
   }
 
   make_circle(r, text) {
@@ -11398,7 +11398,6 @@ class Assignment {
         let candidate = this.find_candidate(vote.can_name);
 
         if (candidate != false) {
-          console.log(voter.conviction);
           candidate.approval += voter.budget * voter.conviction;
           this.total_budget += voter.budget * voter.conviction;
           candidate.num_votes += 1;

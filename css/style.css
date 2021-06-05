@@ -75,13 +75,26 @@ tr:nth-child(even) { background: #eee; }
 tr:nth-child(odd) { background: #fff; }
 */
 .vote {
+    background: #e6007a;
+    color: white;
     display: inline;
-    margin: 0.3em;
-    background: white;
-    padding: 2px;
+    margin: 0.3em;    
+    padding: 4px;
     white-space: nowrap;
     font-size: 75%;
+    border-radius: 4px;
 }
+
+.vote button {
+    background: #e6007a;
+    color: white;
+}
+
+.vote button:hover {
+    color: #e6007a;
+    background: white;
+}
+
 
 .percent {
     margin-top: -56px;

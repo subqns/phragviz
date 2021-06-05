@@ -118,7 +118,6 @@ class Assignment {
 	    for (let vote of voter.votes) {
 		let candidate = this.find_candidate(vote.can_name)
 		if (candidate!=false) {
-		    console.log(voter.conviction)
 		    candidate.approval+=voter.budget*voter.conviction
 		    this.total_budget+=voter.budget*voter.conviction
 		    candidate.num_votes+=1
