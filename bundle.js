@@ -10902,8 +10902,6 @@ class Election {
     this.style = style;
     this.id = election_id + "_";
     this.state = new phragmen.Assignment([], []);
-    this.voter_count = 0;
-    this.candidate_count = 0;
   }
 
   clear() {
@@ -10913,13 +10911,11 @@ class Election {
   }
 
   make_voter_name() {
-    this.voter_count += 1;
-    return "voter_" + this.voter_count;
+    return "voter" + (this.state.voters.length + 1);
   }
 
   make_candidate_name() {
-    this.candidate_count += 1;
-    return "c_" + this.candidate_count;
+    return "c" + (this.state.candidates.length + 1);
   }
 
   make_circle(r, text) {
@@ -11124,13 +11120,13 @@ $("#one_num_rounds").change(()=>{one.update()});
 
 // default
 one.build([3,
-	   ["c_1","c_2","c_3","c_4"],       
+	   ["c1","c2","c3","c4"],       
 	   [
-	       ["voter_1", 1.0, ["c_2"]],
-	       ["voter_2", 1.0, ["c_3","c_4"]],
-	       ["voter_3", 1.0, ["c_2","c_4"]],
-	       ["voter_4", 1.0, ["c_1","c_2"]],
-	       ["voter_5", 1.0, ["c_2","c_3","c_4"]]
+	       ["voter1", 1.0, ["c2"]],
+	       ["voter2", 1.0, ["c3","c4"]],
+	       ["voter3", 1.0, ["c2","c4"]],
+	       ["voter4", 1.0, ["c1","c2"]],
+	       ["voter5", 1.0, ["c2","c3","c4"]]
 	   ]])
 
 ////////////////////////////////////////////////////////////////////
@@ -11142,13 +11138,13 @@ $("#two_new_voter").click(()=>{two.new_voter()});
 $("#two_num_rounds").change(()=>{two.update()});
 
 two.build([3,
-	   ["c_1","c_2","c_3","c_4","c_5"],
+	   ["c1","c2","c3","c4","c5"],
 	   [
-	       ["voter_1", 1.0, ["c_1","c_2"]],
-	       ["voter_2", 2.0, ["c_1","c_2"]],
-	       ["voter_3", 3.0, ["c_1"]],
-	       ["voter_4", 4.0, ["c_2","c_3","c_4"]],
-	       ["voter_5", 5.0, ["c_1","c_4"]]
+	       ["voter1", 1.0, ["c1","c2"]],
+	       ["voter2", 2.0, ["c1","c2"]],
+	       ["voter3", 3.0, ["c1"]],
+	       ["voter4", 4.0, ["c2","c3","c4"]],
+	       ["voter5", 5.0, ["c1","c4"]]
 	   ]])
 
 ////////////////////////////////////////////////////////////////////
@@ -11160,13 +11156,13 @@ $("#three_new_voter").click(()=>{three.new_voter()});
 $("#three_num_rounds").change(()=>{three.update()});
 
 three.build([2,
-	     ["c_1","c_2","c_3"],
+	     ["c1","c2","c3"],
 	     [
-		 ["voter_1", 3.0, ["c_2","c_3"]],
-		 ["voter_2", 0.5, ["c_1"]],
-		 ["voter_3", 0.5, ["c_1"]],
-		 ["voter_4", 0.5, ["c_1"]],
-		 ["voter_5", 0.5, ["c_1"]]
+		 ["voter1", 3.0, ["c2","c3"]],
+		 ["voter2", 0.5, ["c1"]],
+		 ["voter3", 0.5, ["c1"]],
+		 ["voter4", 0.5, ["c1"]],
+		 ["voter5", 0.5, ["c1"]]
 	     ]])
 
 ////////////////////////////////////////////////////////////////////
@@ -11178,13 +11174,13 @@ $("#four_new_voter").click(()=>{four.new_voter()});
 $("#four_num_rounds").change(()=>{four.update()});
 
 four.build([3,
-	     ["c_1","c_2","c_3","c_4","c_5"],
+	     ["c1","c2","c3","c4","c5"],
 	     [
-		 ["voter_1", 1.0, ["c_1","c_2"]],
-		 ["voter_2", 2.0, ["c_1","c_2"]],
-		 ["voter_3", 3.0, ["c_1"]],
-		 ["voter_4", 4.0, ["c_2","c_3","c_4"]],
-		 ["voter_5", 5.0, ["c_1","c_4"]]
+		 ["voter1", 1.0, ["c1","c2"]],
+		 ["voter2", 2.0, ["c1","c2"]],
+		 ["voter3", 3.0, ["c1"]],
+		 ["voter4", 4.0, ["c2","c3","c4"]],
+		 ["voter5", 5.0, ["c1","c4"]]
 	     ]])
 
 
