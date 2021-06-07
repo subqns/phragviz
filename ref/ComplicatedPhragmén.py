@@ -472,12 +472,22 @@ def doall(votelist, numtoelect, listvoters=True, listcans=True):
         print()
 
 
-def example1():
-    votelist=[("A",10.0,["X","Y"]),
-              ("B",20.0,["X","Z"]),
-              ("C",30.0,["Y","Z"])]
+def exampleX():
+    votelist=[("B",0.5,["Z"]),
+              ("A",4.0,["X","Y"]),
+              ("C",0.5,["Z"]),
+              ("D",0.5,["Z"]),
+              ("E",0.5,["Z"])]
     doall(votelist,2)
 
+def exampleY():
+    votelist=[("A",4.0,["X","Y"]),
+              ("B",0.5,["Z"]),
+              ("C",0.5,["Z"]),
+              ("D",0.5,["Z"]),
+              ("E",0.5,["Z"])]
+    doall(votelist,2)
+    
 
 def example2():
     # Approval voting does not do so well for this kind of thing.
@@ -496,7 +506,6 @@ def example3():
     bluevoters = [("BlueV"+str(i),20.0,blueparty) for i in range(20)]
     votelist= redvoters+bluevoters
     doall(votelist, 20, False)
-
 
 def example4():
     #Now we want an example where seq Phragmén is not so good.
@@ -565,21 +574,8 @@ def riparty(vals=200,noms=2000, votesize=10,seed=1):
     votelist=ripartylist(vals,noms,votesize,seed)
     doall(votelist, vals // 4, False, False)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-example1()
+exampleX()
+exampleY()
 
 
 

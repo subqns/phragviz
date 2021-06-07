@@ -34,9 +34,22 @@ class Voter {
 	    v.reset()
 	}
     }
+
+    contains_vote(can_name) {
+	for (let v of this.votes) {
+	    if (v.can_name==can_name) {
+		return true
+	    }
+	}
+	return false
+    }
     
     add_vote(vote) {
-	this.votes.push(vote)
+	if (!this.contains_vote(vote.can_name)) {
+	    this.votes.push(vote)
+	    return true;
+	}
+	return false
     }
 
     set_conviction(c) {
@@ -145,9 +158,10 @@ class Assignment {
     add_vote(vote) {
 	for (let voter of this.voters) {
 	    if (voter.name==vote.voter_name) {
-		voter.add_vote(vote)
+		return voter.add_vote(vote)
 	    }
 	}
+	return false
     }
 
     delete_candidate(candidate_name) {
@@ -256,7 +270,9 @@ const seq_phragmen = (assignment,num_to_elect) => {
 	}
 
 	for (let candidate of assignment.candidates) {
-	    candidate.score_record.push(candidate.score)
+	    if (!candidate.elected) {
+		candidate.score_record.push(candidate.score)
+	    }
 	}
 	
 	let elected_candidate=false

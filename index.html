@@ -9,33 +9,26 @@
   </head>
   
   <body>
-    <h1>How Sequential Phragmén voting works</h1>
-    <p>This is an <a href="https://explorabl.es/">explorable explanation</a> of the Sequential <a href="https://en.wikipedia.org/wiki/Lars_Edvard_Phragm%C3%A9n">Phragmén voting system</a> (invented in the 1890s) currently used on <a href="http://kusama.network">Kusama</a> and <a href="http://polkadot.network">Polkadot's</a> on-chain elections. You can create candidates and voters, adjust their voting stake (drag left and right or type) and add and delete votes to see how it affects the results.</p>
+    <h1>How Sequential Phragmén voting works (WORK IN PROGRESS)</h1>
 
+    <p>This is an <a href="https://explorabl.es/">explorable explanation</a> of the Sequential <a href="https://en.wikipedia.org/wiki/Lars_Edvard_Phragm%C3%A9n">Phragmén voting system</a> (invented in the 1890s) currently used on <a href="http://kusama.network">Kusama</a> and <a href="http://polkadot.network">Polkadot's</a> on-chain elections. You can modify these examples - create candidates and voters, adjust their voting stake (drag left and right or type) and add and delete votes to see how it affects the results.</p>
 
-    <h2>Example 1 from Polkadot Wiki</h2>
-
-    Simple 1KSM per voter blah blah...
+    <p>This voting system is used for nominators to elect validators, as well as for the community to carry out council elections and referendums.</p>
     
+    <hr>
+
+    <h2>Example 1 <a href="https://wiki.polkadot.network/docs/en/learn-phragmen">(from the Polkadot Wiki)</a></h2>
+    
+    <p>
+      A simple example with 1 token per voter, with three candidates
+      to elect out of four. As you would expect the candidates with
+      the most votes (and tokens backing them) get elected. The
+      process is an iterative one, each candidate is selected in a
+      different 'round' of the election process, this is the number
+      displayed in the elected column.
+    </p>
+      
     <div id="container" class="container">
-      <div class="candidates">
-	<h3>candidates</h3>
-	<table>
-	  <thead>
-	    <tr>
-	      <th>name</th>
-	      <th>tokens</th>
-	      <th>vote</th>
-	      <th>elected</th>
-	      <th>delete</th>
-	    </tr>
-	  </thead>
-	  <tbody id="one_candidates">
-	  </tbody>
-	</table>      
-	<button id="one_new_candidate">add candidate</button>
-	<p>number to elect: <input id="one_num_rounds" type="number" value=2></input></p>
-      </div>
       <div class="voters">
 	<h3>voters</h3>
 	<table>
@@ -50,36 +43,121 @@
 	  <tbody id="one_voters">
 	  </tbody>
 	</table>
-	<button id="one_new_voter">add voter</button>
+	<button id="one_new_voter" class="new-button">add voter</button>
       </div>    
-    </div>
-
-    <hr>
-
-    <h2>Example 2 from Polkadot Wiki</h2>
-
-    Different weights (budgets) per voter...
-    
-    <div id="container" class="container">
       <div class="candidates">
 	<h3>candidates</h3>
 	<table>
 	  <thead>
 	    <tr>
 	      <th>name</th>
-	      <th>tokens</th>
+	      <th>stake</th>
 	      <th>vote</th>
 	      <th>elected</th>
-	      <th>score per round</th>
+	      <th>delete</th>
+	    </tr>
+	  </thead>
+	  <tbody id="one_candidates">
+	  </tbody>
+	</table>      
+	<button id="one_new_candidate" class="new-button">add candidate</button>
+	<p>number to elect: <input id="one_num_rounds" type="number" value=2></input></p>
+      </div>
+    </div>
+
+    <hr>
+
+    <h2>Example 2 <a href="https://wiki.polkadot.network/docs/en/learn-phragmen">(from the Polkadot Wiki)</a></h2>
+
+    <p>
+      The problem with having voters associated with accounts is that
+      one person can control many hundreds of accounts, or a single
+      account may indeed be owned by multiple people - there is no way
+      (currently) to know this. Instead the concept is that the people
+      with the most to lose (the highest amount of tokens) are given
+      the most power - voters need to temporarily reserve some of
+      their tokens to weight their voting. It is acknowledged that
+      this comes with it's own problems, and that the power of large
+      stakeholders needs to be limited. We'll see in later examples
+      how Phragmén voting as applied in Polkadot and Kusama tackles
+      this in a couple of ways.
+    <p>
+    
+    <p>
+      Here we see some voters with different stake amounts. The
+      candidates with the highest stakes backing them get elected -
+      but this doesn't always match the vote share. Try changing the
+      stakes to see how it effects the election.
+    </p>
+    
+    <div id="container" class="container">
+      <div class="voters">
+	<h3>voters</h3>
+	<table>
+	  <thead>
+	    <tr>
+	      <th>name</th>
+	      <th>stake</th>
+	      <th>votes</th>
+	      <th>delete</th>
+	    </tr>
+	  </thead>
+	  <tbody id="two_voters">
+	  </tbody>
+	</table>
+	<button id="two_new_voter" class="new-button">add voter</button>
+      </div>    
+      <div class="candidates">
+	<h3>candidates</h3>
+	<table>
+	  <thead>
+	    <tr>
+	      <th>name</th>
+	      <th>stake</th>
+	      <th>vote</th>
+	      <th>elected</th>
 	      <th>delete</th>
 	    </tr>
 	  </thead>
 	  <tbody id="two_candidates">
 	  </tbody>
 	</table>      
-	<button id="two_new_candidate">add candidate</button>
+	<button id="two_new_candidate" class="new-button">add candidate</button>
 	<p>number to elect: <input id="two_num_rounds" type="number" value=2></input></p>
       </div>
+    </div>
+
+    <hr>
+    
+    <h2>Example 3: Sometimes the stake is out voted</h2>
+
+    <p>
+      There is more to Phragmén voting than simply ordering candidates
+      by the amount of tokens backing them. In this example we see
+      some of the intermediate calculations (called voter 'load' and
+      candidate 'scores') which change for each round of the election
+      process.
+    </p>
+
+    <p>
+      With loads and scores the smaller the number the better, as it's
+      the candidate with the <i>lowest score</i> in each round that
+      gets elected. The Polkadot wiki has more detail on how they are
+      calculated which I'm not going to go into here, we are
+      interested in the effect they have on the results.
+    </p>
+    
+    <p>
+      What they do in a way is is redistribute 'success' between
+      voters. Each time one of your chosen candidates is elected in a
+      round, your load is increased for all the subsequent rounds. As
+      this number increases, it reduces the influence of your votes
+      the candidate scores. We can see below a case where a candidate
+      with a large stake loses out to one with a lower stake - because
+      the voters for it haven't had any of their candidates selected.
+    </p>
+    
+    <div id="container" class="container">
       <div class="voters">
 	<h3>voters</h3>
 	<table>
@@ -92,27 +170,18 @@
 	      <th>delete</th>
 	    </tr>
 	  </thead>
-	  <tbody id="two_voters">
+	  <tbody id="three_voters">
 	  </tbody>
 	</table>
-	<button id="two_new_voter">add voter</button>
+	<button id="three_new_voter" class="new-button">add voter</button>
       </div>    
-    </div>
-
-    <hr>
-
-    <h2>Conviction</h2>
-
-    Example 2 with conviction added...
-    
-    <div id="container" class="container">
       <div class="candidates">
 	<h3>candidates</h3>
 	<table>
 	  <thead>
 	    <tr>
 	      <th>name</th>
-	      <th>tokens</th>
+	      <th>stake</th>
 	      <th>vote</th>
 	      <th>elected</th>
 	      <th>score per round</th>
@@ -122,9 +191,29 @@
 	  <tbody id="three_candidates">
 	  </tbody>
 	</table>      
-	<button id="three_new_candidate">add candidate</button>
+	<button id="three_new_candidate" class="new-button">add candidate</button>
 	<p>number to elect: <input id="three_num_rounds" type="number" value=2></input></p>
       </div>
+    </div>
+
+    <hr>
+
+    <h2>Example 4: Voter conviction</h2>
+
+    <p>
+      Another attempt to even the playing field and loosen the power
+      of large stakeholders is to allow people to trade token amounts
+      for time, a <i>conviction</i> parameter allows voters to lock
+      their voting tokens for longer, which multiplies their stake.
+    </p>
+
+    <p>
+      It's important to note that tokens locked for voting can be used
+      for other things whilst locked on votes, other votes, staking,
+      identity
+    </p>
+    
+    <div id="container" class="container">
       <div class="voters">
 	<h3>voters</h3>
 	<table>
@@ -138,11 +227,30 @@
 	      <th>delete</th>
 	    </tr>
 	  </thead>
-	  <tbody id="three_voters">
+	  <tbody id="four_voters">
 	  </tbody>
 	</table>
-	<button id="three_new_voter">add voter</button>
+	<button id="four_new_voter" class="new-button">add voter</button>
       </div>    
+      <div class="candidates">
+	<h3>candidates</h3>
+	<table>
+	  <thead>
+	    <tr>
+	      <th>name</th>
+	      <th>stake</th>
+	      <th>vote</th>
+	      <th>elected</th>
+	      <th>score per round</th>
+	      <th>delete</th>
+	    </tr>
+	  </thead>
+	  <tbody id="four_candidates">
+	  </tbody>
+	</table>      
+	<button id="four_new_candidate" class="new-button">add candidate</button>
+	<p>number to elect: <input id="four_num_rounds" type="number" value=2></input></p>
+      </div>
     </div>
 
     <script src="bundle.js"></script>
