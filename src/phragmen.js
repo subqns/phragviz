@@ -94,9 +94,11 @@ class Candidate {
 	this.elected=false
 	this.elected_round=0
 	this.approval=0
+	this.approval_no_conviction=0
 	this.score=0
 	this.score_record=[]
 	this.budget_proportion=0
+	this.budget_proportion_no_conviction=0
 	this.num_votes=0
 	this.votes_proportion=0
     }
@@ -126,13 +128,16 @@ class Assignment {
 	for (let v of this.voters) { v.reset() }
 
 	this.total_budget=0
+	this.total_budget_no_conviction=0
 	this.total_votes=0
 	for (let voter of this.voters) {
 	    for (let vote of voter.votes) {
 		let candidate = this.find_candidate(vote.can_name)
 		if (candidate!=false) {
 		    candidate.approval+=voter.budget*voter.conviction
+		    candidate.approval_no_conviction+=voter.budget
 		    this.total_budget+=voter.budget*voter.conviction
+		    this.total_budget_no_conviction+=voter.budget
 		    candidate.num_votes+=1
 		    this.total_votes+=1
 		} else {
@@ -142,6 +147,7 @@ class Assignment {
 	}
 	for (let candidate of this.candidates) {
 	    candidate.budget_proportion=candidate.approval/this.total_budget
+	    candidate.budget_proportion_no_conviction=candidate.approval_no_conviction/this.total_budget
 	    candidate.votes_proportion=candidate.num_votes/this.total_votes
 	}
 

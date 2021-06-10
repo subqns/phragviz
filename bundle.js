@@ -10926,6 +10926,31 @@ class Election {
 	      </svg>`;
   }
 
+  make_2circle(r1, r2, text) {
+    // r1 = no conviction could be higher or lower so...
+    // if no_conviction higher than total proportion, then draw
+    // total inside conviction around it
+    let outer = r2;
+    let outer_col = "#73003d";
+    let inner = r1;
+    let inner_col = "#e6007a"; // if conviction lower than total proportion, then draw
+    // with conviction inside as it's smaller
+
+    if (r1 > r2) {
+      outer = r1;
+      outer_col = "#e6007a";
+      inner = r2;
+      inner_col = "#73003d";
+    }
+
+    return `<svg width="80" height="80">
+		<circle cx="50%" cy="50%" r="40" fill="#000" />
+		<circle cx="50%" cy="50%" r="` + outer * 40 + `" fill="` + outer_col + `" />
+		<circle cx="50%" cy="50%" r="` + inner * 40 + `" fill="` + inner_col + `" />
+                <text x="50%" y="50%" text-anchor="middle" fill="#fff" dy=".3em">` + text + `</text>
+	      </svg>`;
+  }
+
   make_delete_button(name) {
     return "<button id='" + this.id + name + "_delete' class='delete-button'>x</button>";
   }
@@ -11055,7 +11080,12 @@ class Election {
         $('#' + this.id + c.name + "_elected_round").html("not elected");
       }
 
-      $('#' + this.id + c.name + '_stakeshare').html(this.make_circle(c.budget_proportion, c.approval.toFixed(2)));
+      if (this.style > 1) {
+        $('#' + this.id + c.name + '_stakeshare').html(this.make_2circle(c.budget_proportion_no_conviction, c.budget_proportion, c.approval.toFixed(2)));
+      } else {
+        $('#' + this.id + c.name + '_stakeshare').html(this.make_circle(c.budget_proportion, c.approval.toFixed(2)));
+      }
+
       $('#' + this.id + c.name + '_voteshare').html(this.make_circle(c.votes_proportion, c.num_votes + " votes"));
     }
 
@@ -11369,9 +11399,11 @@ class Candidate {
     this.elected = false;
     this.elected_round = 0;
     this.approval = 0;
+    this.approval_no_conviction = 0;
     this.score = 0;
     this.score_record = [];
     this.budget_proportion = 0;
+    this.budget_proportion_no_conviction = 0;
     this.num_votes = 0;
     this.votes_proportion = 0;
   }
@@ -11409,6 +11441,7 @@ class Assignment {
     }
 
     this.total_budget = 0;
+    this.total_budget_no_conviction = 0;
     this.total_votes = 0;
 
     for (let voter of this.voters) {
@@ -11417,7 +11450,9 @@ class Assignment {
 
         if (candidate != false) {
           candidate.approval += voter.budget * voter.conviction;
+          candidate.approval_no_conviction += voter.budget;
           this.total_budget += voter.budget * voter.conviction;
+          this.total_budget_no_conviction += voter.budget;
           candidate.num_votes += 1;
           this.total_votes += 1;
         } else {
@@ -11428,6 +11463,7 @@ class Assignment {
 
     for (let candidate of this.candidates) {
       candidate.budget_proportion = candidate.approval / this.total_budget;
+      candidate.budget_proportion_no_conviction = candidate.approval_no_conviction / this.total_budget;
       candidate.votes_proportion = candidate.num_votes / this.total_votes;
     }
   }

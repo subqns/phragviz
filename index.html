@@ -76,8 +76,8 @@
       (currently) to know this. Instead the concept is that the people
       with the most to lose (the highest amount of tokens) are given
       the most power - voters need to temporarily reserve some of
-      their tokens to weight their voting. It is acknowledged that
-      this comes with it's own problems, and that the power of large
+      their tokens to weight their voting. It of course comes with
+      it's own problems, and it is acknowledged that the power of large
       stakeholders needs to be limited. We'll see in later examples
       how Phragmén voting as applied in Polkadot and Kusama tackles
       this in a couple of ways.
@@ -142,19 +142,22 @@
     <p>
       With loads and scores the smaller the number the better, as it's
       the candidate with the <i>lowest score</i> in each round that
-      gets elected. The Polkadot wiki has more detail on how they are
-      calculated which I'm not going to go into here, we are
-      interested in the effect they have on the results.
+      gets
+      elected. The <a href="https://wiki.polkadot.network/docs/en/learn-phragmen">Polkadot
+      wiki</a> has more detail on how they are calculated which I'm
+      not going to go into here - we are interested in the effect they
+      have on the results.
     </p>
     
     <p>
-      What they do in a way is is redistribute 'success' between
-      voters. Each time one of your chosen candidates is elected in a
-      round, your load is increased for all the subsequent rounds. As
-      this number increases, it reduces the influence of your votes
-      the candidate scores. We can see below a case where a candidate
-      with a large stake loses out to one with a lower stake - because
-      the voters for it haven't had any of their candidates selected.
+      What they in a manner of speaking is redistribute 'success'
+      between voters. Each time one of your chosen candidates is
+      elected in a round, your load is increased for all the
+      subsequent rounds. As this number increases, it reduces the
+      influence of your votes the candidate scores. We can see below a
+      case where a candidate with a large stake loses out to one with
+      a lower stake - because the voters that chose it were boosted,
+      as they haven't had any other candidates selected.
     </p>
     
     <div id="container" class="container">
@@ -201,18 +204,26 @@
     <h2>Example 4: Voter conviction</h2>
 
     <p>
-      Another attempt to even the playing field and loosen the power
-      of large stakeholders is to allow people to trade token amounts
-      for time, a <i>conviction</i> parameter allows voters to lock
-      their voting tokens for longer, which multiplies their stake.
+      Another aspect that evens the playing field with regard to
+      large stakeholders is to allow people to trade brute force "deep pockets"
+      for time, using a <i>conviction</i> parameter. This allows voters to lock
+      their voting tokens for longer, which multiplies their stake up to six times.
     </p>
 
     <p>
       It's important to note that tokens locked for voting can be used
-      for other things whilst locked on votes, other votes, staking,
-      identity
+      for other things at the same time, other votes, staking, locked
+      for setting on-chain identity for example. They just can't be
+      moved to another account during the this time.
     </p>
     
+    <p>
+      The two colour circles below show the effect of the conviction
+      on the stake, with the darker pink representing the final
+      multiplied amount for each candidate (which can be smaller if
+      the 0.1x conviction is used).
+    </p>
+      
     <div id="container" class="container">
       <div class="voters">
 	<h3>voters</h3>
@@ -258,7 +269,6 @@
     <p>
       Todo:
       <ul>
-	<li>Explain loads and scores per round</li>
 	<li>Figure out ordered votes for council elections</li>
 	<li>Import on-chain election results</li>
       </ul>
