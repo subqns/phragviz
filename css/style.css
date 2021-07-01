@@ -10,6 +10,7 @@ body {
 
 @media (min-width: 800px) {
     body {
+	font-size: 1.2em;
 	padding-left: 10em;
 	padding-right: 10em;
     }
@@ -31,19 +32,23 @@ th, select { font-size: 0.75em; }
 }
 
 .candidates {
+    font-size: 0.75em;
     width: 100%;
     display: flex;
     padding: 1em;
     flex-direction: column;
     box-sizing: border-box;
+    overflow-x: scroll;
 }
 
 .voters {
+    font-size: 0.75em;
     width: 100%;
     display: flex;
     padding: 1em;
     flex-direction: column;
     box-sizing: border-box;
+    overflow-x: scroll;
 }
 
 @media (min-width: 1000px) {
